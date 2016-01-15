@@ -5,6 +5,7 @@ Install
 2. cp config/default.js config/config.js, modify configs you need. ONLY config/config.js will be read by parser  
 3. gulp build  
 4. node fw-syslog-parser  
+
 Description  
 -----------  
 1. syslog is feed from STDIN  
