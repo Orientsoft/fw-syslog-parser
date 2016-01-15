@@ -1,0 +1,35 @@
+{
+  "name": "fw-syslog-parser",
+  "version": "1.0.0",
+  "description": "Parser for firewall syslog",
+  "main": "fw-syslog-parser.js",
+  "scripts": {
+    "test": "test-parser.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Orientsoft/fw-syslog-parser.git"
+  },
+  "keywords": [
+    "parser",
+    "pegjs",
+    "syslog"
+  ],
+  "author": "Xie Di",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/Orientsoft/fw-syslog-parser/issues"
+  },
+  "homepage": "https://github.com/Orientsoft/fw-syslog-parser#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-ignore": "^2.0.1",
+    "gulp-peg": "^0.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-rimraf": "^0.2.0",
+    "gulp-util": "^3.0.7"
+  },
+  "dependencies": {
+    "redis": "^2.4.2"
+  }
+}
