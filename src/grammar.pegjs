@@ -15,7 +15,7 @@
   }
 
   function createContent(proto, sip, sport, dip, dport, logTs, dir, policy) {
-  	var content = {
+    var content = {
       protocol: proto,
       sourceIP: sip,
       sourcePort: sport,
