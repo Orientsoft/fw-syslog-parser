@@ -1,12 +1,15 @@
 var readline = require('readline')
 var redis = require('redis')
-var parser = require('./lib/parser.js')
+var classifier = require('./lib/classifier.js')
+var policyParser = require('./lib/policy.js')
+var atckParser = require('./lib/atck.js')
 var config = require('./config/config.js')
 
 var client = redis.createClient(config.redisPort, config.redisHost)
 
 client.on('error', function(e) {
   console.log('redis client', e)
+  client.publish(config.resultChannel + '-log', JSON.stringify(e))
 })
 
 var rl = readline.createInterface({
@@ -19,13 +22,25 @@ client.on('connect', function() {
   rl.on('line', function(line) {
     // got a line, parse
     try {
-      var json = parser.parse(line)
+      var json = classifier.parse(line)
+      switch (json.brief)
+      {
+        case 'POLICYPERMIT':
+        var content = policyParser.parse(json.secInfo)
+        json.secInfo = content
+        break;
+
+        case 'ATCKDF':
+        var content = atckParser.parse(json.secInfo)
+        json.secInfo = content
+        break;
+      }
       // pub result to redis
       client.publish(config.resultChannel, JSON.stringify(json))
     } catch(e) {
       // pub error to redis
       e.source = line
-      client.publish(config.resultChannel + '-error', JSON.stringify(e))
+      client.publish(config.resultChannel + '-log', JSON.stringify(e))
     }
   })
 })
