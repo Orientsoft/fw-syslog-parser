@@ -3,6 +3,7 @@ var redis = require('redis')
 var classifier = require('./lib/classifier.js')
 var policyParser = require('./lib/policy.js')
 var atckParser = require('./lib/atck.js')
+var streamParser = require('./lib/stream.js')
 var config = require('./config/config.js')
 
 var client = redis.createClient(config.redisPort, config.redisHost)
@@ -25,6 +26,7 @@ client.on('connect', function() {
       var json = classifier.parse(line)
       switch (json.brief)
       {
+        case 'POLICYDENY':
         case 'POLICYPERMIT':
         var content = policyParser.parse(json.secInfo)
         json.secInfo = content
@@ -33,6 +35,15 @@ client.on('connect', function() {
         case 'ATCKDF':
         var content = atckParser.parse(json.secInfo)
         json.secInfo = content
+        break;
+
+        case 'STREAM':
+        var content = streamParser.parse(json.secInfo)
+        json.secInfo = content
+        break;
+
+        default:
+        client.publish(config.resultChannel + '-log', JSON.stringify({message: 'unknow brief', source: line}))
         break;
       }
       // pub result to redis

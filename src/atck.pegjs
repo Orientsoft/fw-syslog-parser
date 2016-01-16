@@ -8,15 +8,15 @@
   function createContent(type, slot, interf, proto, src, dst, beginTs, endTs, pktCnt, maxSpeed, policy) {
   	var content = {
       attackType: type,
-      slot: slot,
+      slot: parseInt(slot),
       interface: createArray(interf),
       protocol: proto,
       source: createArray(src),
       destination: createArray(dst),
       beginTs: beginTs,
       endTs: endTs,
-      packetCount: pktCnt,
-      maxSpeed: maxSpeed,
+      packetCount: parseInt(pktCnt),
+      maxSpeed: parseInt(maxSpeed),
       policy: policy
     }
     return content
