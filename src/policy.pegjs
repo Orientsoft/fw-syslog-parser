@@ -1,5 +1,5 @@
 {
-  function createContent(proto, sip, sport, dip, dport, logTs, dir, policy) {
+  function createContent(proto, sip, sport, dip, dport, logTs, link, dir, policy) {
   	var content = {
       protocol: proto,
       sourceIP: sip,
@@ -7,7 +7,8 @@
       destIP: dip,
       destPort: dport,
       ts: logTs,
-      commLink: dir,
+      commLink: link,
+      direction: dir,
       policy: policy
     }
     return content
@@ -15,7 +16,7 @@
 }
 
 content
-  = sp protocol:protocol sp "source-ip=" sip:ip ","sp "source-port=" sport:port ","sp "destination-ip=" dip:ip ","sp "destination-port=" dport:port ","sp "time=" logDate:date2 sp logTime:time ","sp dir:dir ","sp policy:policy { var logTs = logDate + " " + logTime; return createContent(protocol, sip, sport, dip, dport, logTs, dir.join(""), policy.join("")) }
+  = sp protocol:protocol sp "source-ip=" sip:ip ","sp "source-port=" sport:port ","sp "destination-ip=" dip:ip ","sp "destination-port=" dport:port ","sp "time=" logDate:date2 sp logTime:time ","sp link:link sp dir:dir ","sp policy:policy { var logTs = logDate + " " + logTime; return createContent(protocol, sip, sport, dip, dport, logTs, link.join(""), dir.join(""), policy.join("")) }
 
 protocol
   = "protocol=" p:[0-9]+ "," { return parseInt(p.join("")) }
@@ -26,8 +27,10 @@ ip
 port
   = p:[0-9]+ { return parseInt(p.join(""))}
 
+link
+  = [a-z0-9()\-]+
 dir
-  = [a-z0-9()\- ]+
+  = [a-zA-Z0-9]+
 
 policy
   = "policy=" p:[0-9#\.]+ { return p }
