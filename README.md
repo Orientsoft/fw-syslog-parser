@@ -39,6 +39,11 @@ To add more payload support, visit pegjs.org/online and review its documents.
 
 Example
 -------
+Raw log:  
+    
+    Jan 13 17:56:09 2016-01-13 17: 53:49 FW-OUT %%01SEC/4/POLICYPERMIT(l): protocol=17, source-ip=10.21.35.190, source-port=16123, destination-ip=81.193.166.96, destination-port=6010, time=2016/01/13 17:53:49, interzone-trust(public)-cmcc(public) outbound, policy=0.#015  
+
+Parser output:  
     
     var json = {
       localTime: Date, // 收集日志的主机时间
