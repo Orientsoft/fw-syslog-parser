@@ -25,7 +25,7 @@ headerTs
   = lt:localTime sp rt:remoteTime { return {localTime: lt, remoteTime: rt} }
 
 localTime
-  = month:[a-zA-Z]+ sp day:[0-9]+ sp ts:time { var now = new Date(); return month.join("") + " " + day.join("") + " "  + now.getFullYear().toString() + " " + ts }
+  = month:[a-zA-Z]+ sp+ day:[0-9]+ sp ts:time { var now = new Date(); return month.join("") + " " + day.join("") + " "  + now.getFullYear().toString() + " " + ts }
 
 remoteTime
   = date:date sp time:brokenTime { return date + " " + time }
